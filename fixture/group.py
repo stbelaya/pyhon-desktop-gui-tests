@@ -24,7 +24,7 @@ class GroupHelper:
         input.type_keys("\n")
         self.close_group_editor()
 
-    def del_some_group_by_name(self, group_name):
+    def del_some_group_by_name(self, group_name, move_contacts=True):
         self.open_group_editor()
         self.select_some_group_by_name(group_name)
         # press Delete button
@@ -32,6 +32,10 @@ class GroupHelper:
         # new window dialog "Delete group"
         self.delete_group_dialog = self.app.application.window(title="Delete group")
         # deletion option by default - Move contacts before group and subgroups deleting (to the top group)
+        # if move_contacts=True -- do by default
+        # if move_contacts=False -- select 2nd option
+        if not move_contacts:
+            self.delete_group_dialog.window(auto_id="uxDeleteAllRadioButton").check()
         # press OK button
         self.delete_group_dialog.window(auto_id="uxOKAddressButton").click()
         self.close_group_editor()
